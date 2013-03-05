@@ -1,0 +1,9 @@
+{
+    "name": "bdt/html-template-it",
+    "description": "Fork of HTML_Template_IT to add composer.json",
+    "autoload": {
+        "classmap": [
+            "./*.php"
+        ]
+    }
+}
