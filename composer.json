@@ -2,7 +2,11 @@
     "name": "bdt/html-template-it",
     "description": "Fork of HTML_Template_IT to add composer.json",
     "autoload": {
-        "classmap": ["./"]
+        "classmap": [
+            "./IT.php",
+            "./ITX.php",
+            "./IT_Error.php"
+        ]
     },
     "include-path": ["./"]
 }
