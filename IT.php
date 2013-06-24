@@ -18,8 +18,6 @@
 // $Id$
 //
 
-require_once 'PEAR.php';
-
 define('IT_OK',                         1);
 define('IT_ERROR',                     -1);
 define('IT_TPL_NOT_FOUND',             -2);
