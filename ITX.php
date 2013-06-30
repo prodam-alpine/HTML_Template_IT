@@ -17,6 +17,7 @@
 //
 // $Id$
 //
+@include_once "PEAR.php";
 
 /**
 * Integrated Template Extension - ITX
