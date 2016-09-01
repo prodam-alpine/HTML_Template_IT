@@ -407,25 +407,44 @@ class HTML_Template_IT
      * @see      setRoot()
      * @access   public
      */
-    function HTML_Template_IT($root = '', $options = null)
+    public function __construct($root = '', $options = null)
     {
         if (!is_null($options)) {
             $this->setOptions($options);
         }
 
         $this->variablesRegExp = '@' . $this->openingDelimiter .
-                                 '(' . $this->variablenameRegExp . ')' .
-                                 $this->closingDelimiter . '@sm';
+            '(' . $this->variablenameRegExp . ')' .
+            $this->closingDelimiter . '@sm';
 
         $this->removeVariablesRegExp = '@' . $this->openingDelimiter .
-                                       "\s*(" . $this->variablenameRegExp .
-                                       ")\s*" . $this->closingDelimiter .'@sm';
+            "\s*(" . $this->variablenameRegExp .
+            ")\s*" . $this->closingDelimiter .'@sm';
 
         $this->blockRegExp = '@<!--\s+BEGIN\s+(' . $this->blocknameRegExp .
-                             ')\s+-->(.*)<!--\s+END\s+\1\s+-->@sm';
+            ')\s+-->(.*)<!--\s+END\s+\1\s+-->@sm';
 
         $this->setRoot($root);
     } // end constructor
+
+    /**
+     * Builds some complex regular expressions and optinally sets the
+     * file root directory.
+     *
+     * Make sure that you call this constructor if you derive your template
+     * class from this one.
+     *
+     * @param string $root    File root directory, prefix for all filenames
+     *                        given to the object.
+     * @param mixed  $options Unknown
+     *
+     * @see      setRoot()
+     * @access   public
+     */
+    function HTML_Template_IT($root = '', $options = null)
+    {
+        self::__construct($root, $options);
+    }
 
 
     /**
@@ -450,7 +469,7 @@ class HTML_Template_IT
             return IT_OK;
         }
 
-        return PEAR::raiseError(
+        return (new PEAR)->raiseError(
             $this->errorMessage(IT_UNKNOWN_OPTION) . ": '{$option}'",
             IT_UNKNOWN_OPTION
         );
@@ -473,7 +492,7 @@ class HTML_Template_IT
         if (is_array($options)) {
             foreach ($options as $option => $value) {
                 $error = $this->setOption($option, $value);
-                if (PEAR::isError($error)) {
+                if ((new PEAR)->isError($error)) {
                     return $error;
                 }
             }
@@ -513,7 +532,7 @@ class HTML_Template_IT
         }
 
         if (!isset($this->blocklist[$block])) {
-            $this->err[] = PEAR::raiseError(
+            $this->err[] = (new PEAR)->raiseError(
                 $this->errorMessage(IT_BLOCK_NOT_FOUND) . '"' . $block . "'",
                 IT_BLOCK_NOT_FOUND
             );
@@ -560,7 +579,7 @@ class HTML_Template_IT
         static $regs, $values;
 
         if (!isset($this->blocklist[$block])) {
-            return PEAR::raiseError(
+            return (new PEAR)->raiseError(
                 $this->errorMessage(IT_BLOCK_NOT_FOUND) . '"' . $block . "'",
                 IT_BLOCK_NOT_FOUND
             );
@@ -787,7 +806,7 @@ class HTML_Template_IT
     {
 
         if (!isset($this->blocklist[$block])) {
-            return PEAR::raiseError(
+            return (new PEAR)->raiseError(
                 $this->errorMessage(IT_BLOCK_NOT_FOUND)
                 . '"' . $block . "'",
                 IT_BLOCK_NOT_FOUND
@@ -812,7 +831,7 @@ class HTML_Template_IT
     function touchBlock($block)
     {
         if (!isset($this->blocklist[$block])) {
-            return PEAR::raiseError(
+            return (new PEAR)->raiseError(
                 $this->errorMessage(IT_BLOCK_NOT_FOUND) . '"' . $block . "'",
                 IT_BLOCK_NOT_FOUND
             );
@@ -1022,7 +1041,7 @@ class HTML_Template_IT
                 if (isset($this->blocklist[$blockname])) {
                     $msg = $this->errorMessage(IT_BLOCK_DUPLICATE, $blockname);
 
-                    $this->err[] = PEAR::raiseError($msg, IT_BLOCK_DUPLICATE);
+                    $this->err[] = (new PEAR)->raiseError($msg, IT_BLOCK_DUPLICATE);
 
                     $this->flagBlocktrouble = true;
                 }
@@ -1072,7 +1091,7 @@ class HTML_Template_IT
         $filename = $this->fileRoot . $filename;
 
         if (!($fh = @fopen($filename, 'r'))) {
-            $this->err[] = PEAR::raiseError(
+            $this->err[] = (new PEAR)->raiseError(
                 $this->errorMessage(IT_TPL_NOT_FOUND) . ': "' .$filename .'"',
                 IT_TPL_NOT_FOUND
             );
@@ -1177,7 +1196,7 @@ class HTML_Template_IT
             );
         }
 
-        if (PEAR::isError($value)) {
+        if ((new PEAR)->isError($value)) {
             $value = $value->getCode();
         }
 
