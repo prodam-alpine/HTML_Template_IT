@@ -390,7 +390,8 @@ class HTML_Template_IT
     var $_options = array(
         'preserve_data' => false,
         'use_preg'      => true,
-        'preserve_input'=> true
+        'preserve_input'=> true,
+        'cache'         => null
     );
 
     /**
@@ -856,7 +857,35 @@ class HTML_Template_IT
     function init()
     {
         $this->free();
-        $this->findBlocks($this->template);
+
+        $arrBlocks = null;
+        if (!is_null($this->_options["cache"]) && $this->_options["cache"]["caching"]) {
+            $strHash = md5($this->template);
+            $objCache = new \Cache_Lite($this->_options["cache"]);
+            $strBlocks = $objCache->get($strHash, "template");
+            if ($strBlocks) {
+                $arrBlocks = unserialize($strBlocks);
+
+                $this->blockdata = $arrBlocks["blockdata"];
+                $this->blocklist = $arrBlocks["blocklist"];
+                $this->blockinner = $arrBlocks["blockinner"];
+            } else {
+                $this->findBlocks($this->template);
+
+                $arrBlocks = [
+                    "blockdata" => $this->blockdata,
+                    "blocklist" => $this->blocklist,
+                    "blockinner" => $this->blockinner
+                ];
+
+                $objCache->save(serialize($arrBlocks), $strHash, "template");
+            }
+        }
+
+        if (!is_array($arrBlocks)) {
+            $this->findBlocks($this->template);
+        }
+
         // we don't need it any more
         $this->template = '';
         $this->buildBlockvariablelist();
