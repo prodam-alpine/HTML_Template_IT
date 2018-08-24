@@ -1,19 +1,13 @@
-This package is http://pear.php.net/package/HTML_Template_IT and has been migrated from https://svn.php.net/repository/pear/packages/HTML_Template_IT
+# HTML_Template_IT - Integrated Templates (v1.2.1)
 
-Please report all new issues via the PEAR bug tracker.
+## Installation
 
-If this package is marked as unmaintained and you have fixes, please submit your pull requests and start discussion on the pear-qa mailing list.
 
-To test, run either
-$ phpunit tests/
-  or
-$ pear run-tests -r
+For a local composer installation:
 
-To build, simply
-$ pear package
+`$ composer install`
 
-To install from scratch
-$ pear install package.xml
+To add as a dependency to your composer-managed application:
 
-To upgrade
-$ pear upgrade -f package.xml
+`$ composer config repositories git https://github.com/XDAM/HTML_Template_IT`
+`$ composer require xdam/html_template_it 1.2.1.*`
