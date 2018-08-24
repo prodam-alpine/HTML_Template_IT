@@ -1,6 +1,6 @@
 {
-    "name": "bdt/html-template-it",
-    "description": "Fork of HTML_Template_IT to add composer.json",
+    "name": "xdam/html_template_it",
+    "description": "Fork of HTML_Template_IT to maintain v1.2.1 compatibily with modern php versions",
     "autoload": {
         "classmap": [
             "./IT.php",
